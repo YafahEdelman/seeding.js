@@ -26,15 +26,10 @@ app.get('/', function(req, res) {
 });
 io.on('connection', function(socket){
   socket.on('put peer id', function(msg){
-    if(!peers[msg.peerID]){
-      peers.push(socket);
+      peers.push(socket); //PEER ID COPYING IS ALLOWED IN THIS....
       socket.peerID=msg.peerID
       socket.open=true;
       socket.keys=[];
-    }
-    else{
-      socket.emit('peer id already in use');
-    }
   });
   socket.on('get value', function(msg){
     async.detect(peers, function(peer,c){c(peer.keys.indexOf(msg.key)>-1 & peer.open);}, function(peer){
