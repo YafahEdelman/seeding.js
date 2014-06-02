@@ -35,11 +35,11 @@ io.on('connection', function(socket){
     async.detect(peers, function(peer,c){c(peer.keys.indexOf(msg.key)>-1 & peer.open);}, function(peer){
       if(peer){
         peer.open=false;
-      socket.emit('put key holder',{peerID:peer.peerID,key:msg.key,hash:vals[msg.key].hash});}
+      socket.emit('put key holder',{peerID:peer.peerID,requestID:msg.requestID,hash:vals[msg.key].hash});}
       else{
         async.forEach(peers,function(peer){peer.open=true;});
         console.log('putting');
-        socket.emit('put data',{key:msg.key,val:vals[msg.key].val});
+        socket.emit('put data',{requestID:msg.requestID,val:vals[msg.key].val});
       }
       socket.keys.push(msg.key);
     });
