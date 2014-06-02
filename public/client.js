@@ -31,7 +31,7 @@ function getItem(key,callback=function(x){},error=function(x){}){
       //what to do with reply is said later
   });
   socket.on('put data', function (msg) {
-    vals[key]=data;
+    vals[key]=msg.val;
     callback(msg.val);
     return msg.val;
   });
